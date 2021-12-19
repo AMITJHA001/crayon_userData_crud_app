@@ -18,3 +18,5 @@ Route::get('/', 'UserDataController@index');
 Route::post('useradd','UserDataController@store');
 
 Route::get('useredit/{id}','UserDataController@edit');
+
+Route::put('userupdate','UserDataController@update');

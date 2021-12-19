@@ -85,7 +85,7 @@
 
                     <div class="form-group row mt-3">
                         <label for="name" >Phone *</label>
-                        <input type="number"  class="form-control" name="phone" id="phone" value="">
+                        <input type="number"  class="form-control" name="phone" id="phone" value="" min="10">
                     </div>
 
                     <div class="form-group row mt-3">
@@ -129,7 +129,7 @@
 
                     <div class="form-group row mt-3">
                         <label for="name" >Phone *</label>
-                        <input type="number"  class="form-control" name="phone" id="edit_phone" value="">
+                        <input type="number"  class="form-control" name="phone" id="edit_phone" value="" min="10">
                     </div>
 
                     <div class="form-group row mt-3">
@@ -172,7 +172,7 @@
                     error: function(error){
                    let flieds = error.responseJSON.errors;
                    //console.log(flieds);
-                   $('#alert').text('Data Added Successfully!');
+                   $('#alert').text('Somthing went wrong!');
                    $('input').css('border','1px solid #ccc');
                    $('textarea').css('border','1px solid #ccc');
                     $('#alert-container').css('display','block');
@@ -201,6 +201,53 @@
                     $('#edit_address').val(data.address);
                 })
             }
+
+
+
+            $(document).ready(function(){
+                $('#usereditform').on('submit',function(event){
+                event.preventDefault();
+                $.ajax({
+                    type:"PUT",
+                    url:"/userupdate",
+                    data:$('#usereditform').serialize(),
+                    success: function(response){
+                    $('input').css('border','1px solid #ccc');
+                    $('textarea').css('border','1px solid #ccc');
+                    $('#alert').removeClass('alert-danger');
+                    $('#alert').addClass('alert-primary');
+                    $('#alert-container').css('display','block');
+                    $('#alert').text('Data Updated Successfully!');
+                    $('input').val("");
+                    $('textarea').val("");
+                    $('#exampleModal').modal('hide');
+                    $('#alert-container').delay(1000).fadeOut('slow');
+                    setTimeout(function(){
+                        location.reload();
+                    },1500)
+                    },
+                    error: function(error){
+                 let flieds = error.responseJSON.errors;
+                   $('#alert').text('Somthing went wrong!');
+                   $('input').css('border','1px solid #ccc');
+                   $('textarea').css('border','1px solid #ccc');
+                    $('#alert-container').css('display','block');
+                    $('#alert').removeClass('alert-primary');
+                    $('#alert').addClass('alert-danger');
+                    key = Object.keys(flieds);
+                    key.map((e)=>{
+                     return   $('#alert').append(`<br/> ${e} : ${flieds[e]}`);
+                    });
+                    key.map((e)=>{
+                    return  $(`#edit_${e}`).css('border','1px solid red');
+                    });
+
+
+                    }
+                });
+                
+                })
+            })
 
         </script>
     </body>

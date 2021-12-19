@@ -53,7 +53,7 @@ class UserDataController extends Controller
     $request->validate([
             'address'=>'required',
             'name'=>'required',
-            'phone'=>'required|integer|min:10',
+            'phone'=>'required|digits_between:10,10|numeric',
             'email'=>'required|regex:/(.+)@(.+)\.(.+)/i |unique:user_data,email'
     ]);
 
@@ -97,9 +97,26 @@ class UserDataController extends Controller
      * @param  \App\userData  $userData
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, userData $userData)
+    public function update(Request $request)
     {
         //
+        $user =  userData::find($request->input('user_id'));
+       // return response()->json($user);
+
+        $request->validate([
+            'address'=>'required',
+            'name'=>'required',
+            'phone'=>'required|digits_between:10,10|numeric',
+            'email'=>'required|regex:/(.+)@(.+)\.(.+)/i |unique:user_data,email,'.$request->input('user_id'),
+    ]);
+
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->phone = $request->phone;
+    $user->address = $request->address;
+    $user->save();
+
+     return response()->json($user);
     }
 
     /**
