@@ -36,19 +36,6 @@ class UserDataController extends Controller
      */
     public function store(Request $request)
     {
-       // $user = new userData;
-        // if ($users === null) {
-        // // User does not exist
-        // $user->name = $request->input('name');
-        // $user->email = $request->input('email');
-        // $user->phone = $request->input('phone');
-        // $user->address = $request->input('address');
-        // $user->save();
-        // } else {
-        // $user->save();
-        // // User exits
-        // }
-    //  return   print_r($request->input());
     $user = new userData;
     $request->validate([
             'address'=>'required',
@@ -101,8 +88,6 @@ class UserDataController extends Controller
     {
         //
         $user =  userData::find($request->input('user_id'));
-       // return response()->json($user);
-
         $request->validate([
             'address'=>'required',
             'name'=>'required',
