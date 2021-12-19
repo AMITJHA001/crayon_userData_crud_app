@@ -15,6 +15,7 @@ class UserDataController extends Controller
     public function index()
     {
         //
+        return view('index')->with('userArray',userData::all());
     }
 
     /**
@@ -83,9 +84,10 @@ class UserDataController extends Controller
      * @param  \App\userData  $userData
      * @return \Illuminate\Http\Response
      */
-    public function edit(userData $userData)
+    public function edit(userData $userData,$id)
     {
-        //
+        $user = userData::find($id);
+        return response()->json($user);
     }
 
     /**

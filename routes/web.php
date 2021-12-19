@@ -13,8 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'UserDataController@index');
 
 Route::post('useradd','UserDataController@store');
+
+Route::get('useredit/{id}','UserDataController@edit');

@@ -28,7 +28,7 @@
 
         <div class="d-flex justify-content-between">
             <h4>List of Users</h4>
-            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" >Add</button>
+            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal" >Add</button>
         </div>
 
         <table class="table mt-3 table-bordered">
@@ -43,16 +43,18 @@
                 </tr>
             </thead>
             <tbody>
+                @foreach($userArray as $key=>$user)
                 <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Otto</td>
+                <th scope="row">{{$key+1}}</th>
+                <td>{{$user->name}}</td>
+                <td>{{$user->address}}</td>
+                <td>{{$user->email}}</td>
+                <td>{{$user->phone}}</td>
                 <td class="d-flex " >
-                <button type="button" class="btn btn-primary">Edit</button>
+                <button type="button" class="btn btn-primary" onclick="getUserData(<?php echo $user->id; ?>)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
                 </td>
                 </tr>
+                @endforeach
             </tbody>
         </table>
         </div>
@@ -60,7 +62,7 @@
        </div>
 
 
-       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+       <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
@@ -98,7 +100,52 @@
                 
                 </div>
             </div>
+        </div>
+
+
+
+
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Update Users</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- {{$errors}} -->
+                <form class="row g-3" id="usereditform">
+                {{ csrf_field() }}
+                    <div class="form-group row mt-3">
+                        <label for="name" >Name *</label>
+                        <input type="hidden"  class="form-control" name="user_id" id="edit_id" value="">
+                        <input type="text"  class="form-control" name="name" id="edit_name" value="">
+                    </div>
+                   
+                    <div class="form-group row mt-3">
+                        <label for="name" >Email *</label>
+                        <input type="email"  class="form-control" name="email" id="edit_email" value="">
+                    </div>
+
+                    <div class="form-group row mt-3">
+                        <label for="name" >Phone *</label>
+                        <input type="number"  class="form-control" name="phone" id="edit_phone" value="">
+                    </div>
+
+                    <div class="form-group row mt-3">
+                        <label for="address" >Address *</label>
+                        <textarea name="address" id="edit_address"></textarea>
+                    </div>
+                    <div class="row mt-3">
+                        <button type="submit" class="btn btn-primary mb-3" rows="10" name="save">Save</button>
+                    </div>
+                </form>
+                </div>
+                </div>
             </div>
+        </div>
+
+
         <script>
             $(document).ready(function(){
                 $('#userform').on('submit',function(event){
@@ -143,6 +190,18 @@
                 
                 })
             })
+
+
+            const getUserData = (id) =>{
+                $.get(`useredit/${id}`,function(data){
+                    $('#edit_id').val(data.id);
+                    $('#edit_name').val(data.name);
+                    $('#edit_email').val(data.email);
+                    $('#edit_phone').val(data.phone);
+                    $('#edit_address').val(data.address);
+                })
+            }
+
         </script>
     </body>
 </html>
