@@ -1,8 +1,8 @@
 # crayon_userData_crud_app
- clone
- create database
- edit .env file with database name
- run artisan serve
- run migration
+ <br/> clone
+ <br/> create database
+<br/> edit .env file with database name
+<br/> run artisan serve
+<br/> run migration
 
- Set up done!
+<br/> Set up done!
